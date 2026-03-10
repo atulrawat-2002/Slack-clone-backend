@@ -9,7 +9,7 @@ export const internalServerError = () => {
 
 export const customErrorResponse = (error) => {
     if(!error.message) {
-        return internalServerError(error);
+        return internalServerError();
     }
     return {
         success: false,
