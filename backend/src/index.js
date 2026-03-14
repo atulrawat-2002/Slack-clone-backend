@@ -2,18 +2,41 @@ import express from 'express';
 import morgan from "morgan";
 import { connectDB } from './configs/dbConfig.js';
 import { PORT } from './configs/serverConfigs.js';
-import apiRouter from './routes/apiRoutes.js'
+import apiRouter from './routes/apiRoutes.js';
+import bullServerAdapter from './configs/bullBoardConfig.js';
+import { Server } from 'socket.io';
+import { createServer } from "http";
+import cors from "cors";
+import { messageSocketHanlers } from './controllers/messageSocketController.js';
+import { channelSocketHandlers } from './controllers/channelSocketController.js';
 
 const app = express();
+const server = createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: '*',
+    methods: ['GET', 'POST']
+  }
+});
+
+io.on('connection', (socket) => {
+
+  messageSocketHanlers(io, socket);
+  channelSocketHandlers(io, socket);
+
+})
+
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(morgan("common"))
+app.use(cors())
 
 
+app.use('/ui', bullServerAdapter.getRouter());
 app.use('/api', apiRouter);
 
 
-app.listen(PORT, async () => {
+server.listen(PORT, async () => {
   connectDB()
   console.log(`App is listening on ${PORT}`);
 });

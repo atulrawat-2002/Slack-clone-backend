@@ -1,0 +1,22 @@
+import { StatusCodes } from "http-status-codes";
+import { getPaginatedMessagesService } from "../services/messageService.js";
+import { customErrorResponse, successResponse } from "../utils/responseObjects.js";
+
+export const getPaginatedMessagesController = async (req, res) => {
+    try {
+        
+        const response = await getPaginatedMessagesService({
+            channleId: req.params.channleId,
+        },
+        req.query.page || 1,
+        req.query.limit || 20,
+        req.user
+    );
+        return res.status(StatusCodes.OK).json(successResponse(response, 'Fetched message successfully'));
+
+    } catch (error) {
+
+        console.log('getPaginatedMessagesController error', error.message);
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(customErrorResponse(error))
+    }
+}

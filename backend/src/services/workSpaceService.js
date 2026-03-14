@@ -2,6 +2,8 @@ import uuid4 from "uuid4"
 import workSpaceRepository from "../repositories/workSpaceRepository.js";
 import channelRepository from "../repositories/channleRepository.js";
 import userRepository from "../repositories/userRepository.js";
+import { addMailToMailQueue } from "../producers/mailQueueProducer.js";
+import workSpaceJoinMale from "../utils/mailObject.js";
 
 
 export function isUserAdminOfWorkSpace(workSpace, userId) {
@@ -178,6 +180,12 @@ export const addMemberToWorkSpaceService = async (workSpaceId, memberId, role, u
       }
 
       const response = await workSpaceRepository.addMemberToWorkSpace(workSpaceId, memberId, role);
+
+      await addMailToMailQueue({
+         ...workSpaceJoinMale(workSpace),
+         to: isValidUser.email,
+      })
+
       return response;
 
    } catch (error) {
