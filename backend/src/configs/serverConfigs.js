@@ -15,3 +15,7 @@ export const REDIS_HOST = process.env.REDIS_HOST || 'localhost';
 export const REDIS_PORT = process.env.REDIS_PORT || 6379;
 
 export const MAIL_ADDRESS = process.env.MAIL_ADDRESS;
+
+export const APP_LINK = process.env.APP_LINK || 'http://localhost:8000';
+
+export const ENABLE_EMAIL_VARIFICATION = process.env.ENABLE_EMAIL_VARIFICATION || false;

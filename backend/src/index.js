@@ -9,6 +9,7 @@ import { createServer } from "http";
 import cors from "cors";
 import { messageSocketHanlers } from './controllers/messageSocketController.js';
 import { channelSocketHandlers } from './controllers/channelSocketController.js';
+import { verifyEmailController } from './controllers/workSpaceController.js';
 
 const app = express();
 const server = createServer(app);
@@ -34,6 +35,7 @@ app.use(cors())
 
 app.use('/ui', bullServerAdapter.getRouter());
 app.use('/api', apiRouter);
+app.get('/verify/:token', verifyEmailController);
 
 
 server.listen(PORT, async () => {
