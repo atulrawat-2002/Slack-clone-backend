@@ -6,7 +6,8 @@ export const getPaginatedMessagesController = async (req, res) => {
     try {
         
         const response = await getPaginatedMessagesService({
-            channleId: req.params.channleId,
+            channelId: req.params.channelId,
+            workSpaceId: req.params.workSpaceId,
         },
         req.query.page || 1,
         req.query.limit || 20,

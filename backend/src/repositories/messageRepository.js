@@ -9,7 +9,8 @@ const messsageRepository = {
         .sort({createdAt: -1})
         .skip((page - 1) * limit)
         .limit(limit)
-        .populate('senderId', 'username, email, avatar');
+        .populate('senderId', 'username email avatar');
+
 
         return message;
     }

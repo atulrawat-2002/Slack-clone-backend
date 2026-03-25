@@ -38,10 +38,7 @@ export const verifyTokenService = async (token) => {
         user.isVerified = true;
         user.verificationToken = null;
         user.verificationTokenExpiry = null;
-        console.log("before ", user)
         await user.save();
-
-        console.log("after ", user)
         
         return user;
 

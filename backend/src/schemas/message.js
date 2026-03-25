@@ -7,7 +7,8 @@ const messageSchema = new mongoose.Schema({
         required: [true, 'Meassage body is required']
     },
     image: {
-        type: String,
+        publicId: String,
+        url: String
     },
     channelId: {
         type: mongoose.Schema.Types.ObjectId,

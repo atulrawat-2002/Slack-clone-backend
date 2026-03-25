@@ -10,6 +10,15 @@ import cors from "cors";
 import { messageSocketHanlers } from './controllers/messageSocketController.js';
 import { channelSocketHandlers } from './controllers/channelSocketController.js';
 import { verifyEmailController } from './controllers/workSpaceController.js';
+import cloudinary from "cloudinary";
+import { CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET, CLOUDINARY_CLOUD_NAME } from './configs/cloudinaryConfig.js';
+
+
+cloudinary.config({
+    cloud_name: CLOUDINARY_CLOUD_NAME,
+    api_key: CLOUDINARY_API_KEY,
+    api_secret: CLOUDINARY_API_SECRET 
+});
 
 const app = express();
 const server = createServer(app);
@@ -21,7 +30,6 @@ const io = new Server(server, {
 });
 
 io.on('connection', (socket) => {
-
   messageSocketHanlers(io, socket);
   channelSocketHandlers(io, socket);
 

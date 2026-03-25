@@ -4,7 +4,6 @@ import { NEW_MESSAGE_EVENT, NEW_MESSAGE_RECEIVED_EVENT } from "../utils/eventCon
 export const messageSocketHanlers = (io, socket) => {
     
     socket.on(NEW_MESSAGE_EVENT, async function createMessageHandler(data, cb){
-
     const messageResponse = await createMessageService(data);
     const {channelId} = data;
 
