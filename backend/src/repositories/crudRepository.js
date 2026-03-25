@@ -3,7 +3,8 @@ function crudRepository (schema) {
         model: schema,
         create: async function (data) {
             const newDoc = await this.model.create(data);
-            return newDoc;
+            const withSenderInfo = await newDoc.populate('senderId', 'username email avatar');
+            return withSenderInfo;
         },
         getAll: async function () {
             const allDoc = await this.model.find();
