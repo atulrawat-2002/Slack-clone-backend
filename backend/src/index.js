@@ -48,6 +48,12 @@ app.use('/ui', bullServerAdapter.getRouter());
 app.use('/api', apiRouter);
 app.get('/verify/:token', verifyEmailController);
 
+app.get('/ping', async (req, res) => {
+  res.status(200).json({
+    message: "Ok from slack's backend"
+  })
+})
+
 
 server.listen(PORT, async () => {
   
