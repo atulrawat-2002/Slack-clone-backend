@@ -54,11 +54,11 @@ app.get('/ping', async (req, res) => {
   })
 })
 
+await connectDB()
 
 server.listen(PORT, async () => {
   
   try {
-    await connectDB()
     console.log(`App is listening on ${PORT}`);
   } catch (error) {
     console.log(error)
