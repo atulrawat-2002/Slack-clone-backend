@@ -1,4 +1,5 @@
 import User from '../schemas/user.js';
+import { createJWT } from '../utils/authUtils.js';
 import crudRepository from './crudRepository.js';
 
 const userRepository = {
@@ -7,7 +8,21 @@ const userRepository = {
   signUpUser: async function (data) {
     const newUser = new User(data);
     await newUser.save();
-    return newUser;
+    const {
+      createdAt,
+      updatedAt,
+      isVerified,
+      password,
+      verificationToken,
+      verificationTokenExpiry,
+      _v,
+      ...returnable
+    } = newUser.toObject();
+    console.log(returnable);
+    return {
+      ...returnable,
+      token: createJWT({id: returnable._id, email: returnable.email})
+    };
   },
 
   getUserByEmail: async function (email) {
